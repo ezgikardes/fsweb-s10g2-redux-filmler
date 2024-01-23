@@ -3,8 +3,11 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 const AppHeader = (props) => {
-  const appTitle = useSelector((store) => store.appTitle)
-  const displayFavorites = true;
+
+  //14. satırdaki appTitle datasını store'dan çekmek için useSelector kullanalım:
+  const appTitle = useSelector((store) => store.movie.appTitle);
+  //favorilere eklenen filmleri gizlemek için store'dan veri çekelim:
+  const displayFavorites = useSelector((store) => store.favorite.displayFavorites);
 
   return (
     <div className="flex justify-between items-center shadow rounded-md bg-white p-2 pl-3 my-3">

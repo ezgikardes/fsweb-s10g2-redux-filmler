@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { addMovie } from './../actions/movieActions';
+import { addMovie } from '../store/actions/movieActions';
 
 import { Link, useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -19,6 +19,7 @@ const AddMovieForm = (props) => {
   const handleChange = (e) => {
     setMovie({
       ...movie,
+      id: Date.now(), //her yeni film eklediğimizde otomatik olarak benzersiz yeni bir id oluşturması için.
       [e.target.name]: e.target.value
     });
   }
@@ -26,7 +27,7 @@ const AddMovieForm = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(addMovie(movie))
-    history.push('/movies/');
+    history.push('/movies/'); //yeni film eklendikten sonra anasayfaya push'la
   }
 
   const { title, director, genre, metascore, description } = movie;
@@ -34,7 +35,7 @@ const AddMovieForm = (props) => {
     <div className="bg-white rounded-md shadow flex-1">
       <form onSubmit={handleSubmit}>
         <div className="p-5 pb-3 border-b border-zinc-200">
-          <h4 className="text-xl font-bold">Add Movie</h4>
+          <h4 classNa me="text-xl font-bold">Add Movie</h4>
         </div>
 
         <div className="px-5 py-3">

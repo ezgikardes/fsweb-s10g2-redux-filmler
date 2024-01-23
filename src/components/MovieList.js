@@ -5,7 +5,9 @@ import MovieListFooter from './MovieListFooter';
 import { useSelector } from 'react-redux';
 
 const MovieList = (props) => {
-  const movies = useSelector((store) => store.movieReducer.movies);
+
+  //useSelector'le combineReducer'da "movie" olarak tanımladığım movieReducer'dan movies datasını alalım. path'i store.movie.movies:
+  const movies = useSelector((store) => store.movie.movies);
 
   return (
     <div className="flex-1">
@@ -22,10 +24,10 @@ const MovieList = (props) => {
           </thead>
 
           <tbody className='text-sm'>
-            {
+            { //buradaki movies datası store'dan çekilecek. yukarıda useSelector'le çekelim:
               movies.map(movie => 
               <MovieListItem key={movie.id} movie={movie} />)
-            }
+            } 
           </tbody>
         </table>
       </div>

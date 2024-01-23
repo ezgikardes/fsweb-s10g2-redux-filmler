@@ -1,19 +1,25 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
-import { deleteMovie } from '../actions/movieActions';
+import { addFavorite, deleteMovie,  } from '../store/actions/movieActions';
+import { removeFavorite } from '../store/actions/favoritesActions';
 
 const Movie = (props) => {
   const { id } = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const movies = useSelector((store) => store.movieReducer.movies )
+  const movies = useSelector((store) => store.movie.movies )
   const movie = movies.find(movie => movie.id === Number(id));
-
+  
   const handleDelete = () => {
-      dispatch(deleteMovie(Number(id)));
+      dispatch(deleteMovie(movie.id)); //gelen id'ye sahip filmi sil. buradaki id, 12. satırdan geliyor.
+      dispatch(removeFavorite(movie.id)); //gelen id'ye sahip film silindiğinde favori listesinden de silinsin.
       history.push('/movies');
+  } //sildikten sonra anasayfaya push'lamazsak hata alıyoruz. çünkü sildikten sonra id null olur. o yüzden history.push anasayfa diyoruz. 
+
+  const addHandler = () => {
+    dispatch(addFavorite(movie));
   }
 
 
@@ -50,7 +56,7 @@ const Movie = (props) => {
         className="myButton bg-red-600 hover:bg-red-500" 
         onClick={handleDelete}
         >Sil</button>
-        <button className="myButton bg-blue-600 hover:bg-blue-500 ">Favorilere ekle</button>
+        <button onClick={addHandler}className="myButton bg-blue-600 hover:bg-blue-500 ">Favorilere ekle</button>
       </div>
     </div>
   );
